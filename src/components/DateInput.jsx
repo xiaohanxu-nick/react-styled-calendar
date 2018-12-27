@@ -91,12 +91,13 @@ InputContainer.defaultProps = {
 };
 
 const DateInput = (props) => {
-  const dateFormat = 'MMM DD YYYY';
   const {
     selectedDate,
     onButtonClick,
     editting,
+    showTimeSelector,
   } = props;
+  const dateFormat = showTimeSelector ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
 
   return (
     <DateInputContainer>
@@ -116,13 +117,14 @@ const DateInput = (props) => {
 DateInput.defaultProps = {
   selectedDate: new Date(),
   onButtonClick: () => {},
+  showTimeSelector: false,
   editting: false,
 };
 
 DateInput.propTypes = {
   selectedDate: PropTypes.instanceOf(Date),
   onButtonClick: PropTypes.func,
+  showTimeSelector: PropTypes.bool,
   editting: PropTypes.bool,
 };
-
 export default DateInput;

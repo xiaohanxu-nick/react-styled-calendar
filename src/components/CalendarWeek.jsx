@@ -49,7 +49,7 @@ CalendarWeek.defaultProps = {
 };
 
 CalendarWeek.propTypes = {
-  currentMonth: PropTypes.instanceOf(new Date()),
+  currentMonth: PropTypes.instanceOf(Date),
 };
 
 
