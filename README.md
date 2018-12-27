@@ -3,6 +3,10 @@ A simple react Datepicker component built with [styled-components](https://www.s
 ## DEMO
 ![demo](./demo/demo.gif)
 
+With TimeSelector
+
+![TimeSelector](./demo/showTimeSelector.gif)
+
 [DEMO online](https://codesandbox.io/s/pp6rv97oz0)
 ## Installation
 
@@ -30,3 +34,9 @@ function App() {
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ```
+
+## API
+
+name | type | default | description 
+---- | ---- | ------- | -----------
+showTimeSelector | boolean | false | control the display of TimeSelector Component
