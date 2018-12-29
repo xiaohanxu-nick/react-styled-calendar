@@ -21,15 +21,17 @@ DaysContainer.defaultProps = {
 };
 
 const CalendarWeek = (props) => {
-  const dateFormat = 'dddd';
   const days = [];
-  const { currentMonth } = props;
-  let weekday = '';
+  const {
+    currentMonth,
+    formatWeek,
+  } = props;
+  let weekday;
 
   const startDate = dateFns.startOfWeek(currentMonth);
 
   for (let i = 0; i < 7; i += 1) {
-    weekday = `${dateFns.format(dateFns.addDays(startDate, i), dateFormat)}`.substring(0, 3);
+    weekday = `${dateFns.format(dateFns.addDays(startDate, i), formatWeek)}`;
     days.push(
       <Col
         justifyContent="center"
@@ -50,6 +52,7 @@ CalendarWeek.defaultProps = {
 
 CalendarWeek.propTypes = {
   currentMonth: PropTypes.instanceOf(Date),
+  formatWeek: PropTypes.isRequired,
 };
 
 

@@ -51,11 +51,11 @@ IconContainer.defaultProps = {
 };
 
 const CalendarHeader = (props) => {
-  const dateFormat = 'MMMM YYYY';
   const {
     currentMonth,
     nextMonth,
     prevMonth,
+    formatMonthYear,
   } = props;
 
   return (
@@ -73,7 +73,7 @@ const CalendarHeader = (props) => {
         justifyContent="center"
         textAlign="center"
       >
-        {dateFns.format(currentMonth, dateFormat)}
+        {dateFns.format(currentMonth, formatMonthYear)}
       </Col>
       <Col
         justifyContent="flext-end"
@@ -98,6 +98,7 @@ CalendarHeader.propTypes = {
   currentMonth: PropTypes.instanceOf(Date),
   prevMonth: PropTypes.func,
   nextMonth: PropTypes.func,
+  formatMonthYear: PropTypes.string.isRequired,
 };
 
 export default CalendarHeader;

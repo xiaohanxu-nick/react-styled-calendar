@@ -183,6 +183,8 @@ class Calendar extends Component {
       showTimeSelector,
       showCancelButton,
       showConfirmButton,
+      formatWeek,
+      formatMonthYear,
     } = this.props;
 
     return (
@@ -198,9 +200,11 @@ class Calendar extends Component {
             currentMonth={currentMonth}
             prevMonth={this.prevMonth}
             nextMonth={this.nextMonth}
+            formatMonthYear={formatMonthYear}
           />
           <CalendarWeek
             currentMonth={currentMonth}
+            formatWeek={formatWeek}
           />
           <CalendarCell
             currentMonth={currentMonth}
@@ -250,12 +254,16 @@ Calendar.defaultProps = {
   showTimeSelector: false,
   showCancelButton: false,
   showConfirmButton: false,
+  formatMonthYear: 'MMMM YYYY',
+  formatWeek: 'ddd',
 };
 
 Calendar.propTypes = {
   showTimeSelector: PropTypes.bool,
   showCancelButton: PropTypes.bool,
   showConfirmButton: PropTypes.bool,
+  formatWeek: PropTypes.string,
+  formatMonthYear: PropTypes.string,
 };
 
 export default Calendar;
