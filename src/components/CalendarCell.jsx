@@ -114,7 +114,7 @@ const CalendarCells = (props) => {
           key={day}
           onClick={className !== 'disabled'
             ? () => onDateClick(dateFns.parse(cloneDay), showConfirmButton)
-            : ''
+            : () => {}
           }
         >
           <Number>{formattedDate}</Number>
