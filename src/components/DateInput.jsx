@@ -49,7 +49,7 @@ const Bar = styled.span`
     botto: 1px
     position: absolute;
     background: ${({ theme }) => theme.mainColor};
-    transition: 0.2s ease all;
+    transition: 0.5s ease all;
   }
   &:before {
     left: 50%;
@@ -81,7 +81,7 @@ const InputContainer = styled.input`
     }
 
     ~ ${HightLight} {
-      animation: ${InputHightLighter} 0.3s ease;
+      animation: ${InputHightLighter} 0.5s ease;
     }
   }
 `;

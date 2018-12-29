@@ -30,34 +30,24 @@ const CalendarBodyContainer = styled.div`
   transform-origin: 50% 0%;
   transform: scale(0);
   opacity: 0;
-  transition: transform .2s ease, opacity .2s ease;
+  transition: transform .5s ease, opacity .5s ease;
   will-change: transform, opacity;
+  animation-delay: 2s;
 
   &.open {
     transform: scale(1);
-    opacity: 1; 
+    opacity: 1;
   }
+  
 `;
 
 CalendarBodyContainer.defaultProps = {
   theme: defaultTheme,
 };
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background: ${({ theme }) => theme.neutralColor};
-  padding-top: 8px;
-  border-top: 1px solid ${({ theme }) => theme.borderColor};
-  box-sizing: border-box;
-`;
-
-ButtonContainer.defaultProps = {
-  theme: defaultTheme,
-};
-
 const Button = styled.div`
   background-color: transparent;
+  text-align: center;
   outline: none;
   border: none;
   font-size: 14px;
@@ -84,26 +74,61 @@ Button.defaultProps = {
   theme: defaultTheme,
 };
 
+const ButtonContainer = styled.div`
+  display: flex;
+  background: ${({ theme }) => theme.neutralColor};
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
+  box-sizing: border-box;
+  
+  & ${Button} {
+    width: ${({ buttonCounter }) => (buttonCounter !== 0 ? `${100 / buttonCounter}%` : '100%')}
+  }
+`;
+
+ButtonContainer.defaultProps = {
+  theme: defaultTheme,
+};
+
 class Calendar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentMonth: new Date(),
-      selectedDate: new Date(),
-      editting: false,
-      edittingTime: false,
-    };
+  state = {
+    currentMonth: new Date(),
+    selectedDate: new Date(),
+    editting: false,
+    edittingTime: false,
+    buttonCounter: 0,
   }
 
-  onDateClick = (day) => {
+  componentDidMount() {
+    const {
+      showTimeSelector,
+      showCancelButton,
+      showConfirmButton,
+    } = this.props;
+
+
+    this.setState(prevState => ({
+      ...prevState,
+      buttonCounter: showTimeSelector + showCancelButton + showConfirmButton,
+    }));
+  }
+
+  onDateClick = (day, showConfirmButton) => {
     this.setState(prevState => ({
       ...prevState,
       selectedDate: day,
     }));
+
+    if (!showConfirmButton) {
+      this.onSave();
+    }
   }
 
-  onHourClick = (hour) => {
+  onHourClick = (hour, showConfirmButton) => {
     this.setState(prevState => ({ ...prevState, selectedDate: hour }));
+
+    if (!showConfirmButton) {
+      this.onSave();
+    }
   }
 
   onButtonClick = (e) => {
@@ -112,10 +137,17 @@ class Calendar extends Component {
     this.setState(prevState => ({ ...prevState, editting: true }));
   }
 
-  onSave = (e) => {
-    e.preventDefault();
-
+  onSave = () => {
     this.setState(prevState => ({ ...prevState, editting: false }));
+  }
+
+  onCancel = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      editting: false,
+      selectedDate: new Date(),
+      currentMonth: new Date(),
+    }));
   }
 
   onTimeEditting = (e) => {
@@ -144,10 +176,13 @@ class Calendar extends Component {
       selectedDate,
       editting,
       edittingTime,
+      buttonCounter,
     } = this.state;
 
     const {
       showTimeSelector,
+      showCancelButton,
+      showConfirmButton,
     } = this.props;
 
     return (
@@ -171,6 +206,7 @@ class Calendar extends Component {
             currentMonth={currentMonth}
             selectedDate={selectedDate}
             onDateClick={this.onDateClick}
+            showConfirmButton={showConfirmButton}
           />
           {
             showTimeSelector
@@ -178,19 +214,30 @@ class Calendar extends Component {
                 <TimeSelector
                   selectedDate={selectedDate}
                   onHourClick={this.onHourClick}
+                  showConfirmButton={showConfirmButton}
                   edittingTime={edittingTime}
                 />
               ) : ''
           }
-          <ButtonContainer>
-            <Button onClick={this.onSave}>Cancel</Button>
+          <ButtonContainer buttonCounter={buttonCounter}>
+            {
+              showCancelButton
+                ? (
+                  <Button onClick={this.onCancel}>Cancel</Button>
+                ) : ''
+            }
             {
               showTimeSelector
                 ? (
                   <Button onClick={this.onTimeEditting}>Select Time</Button>
                 ) : ''
             }
-            <Button onClick={this.onSave}>Confirm</Button>
+            {
+              showConfirmButton
+                ? (
+                  <Button onClick={this.onSave}>Confirm</Button>
+                ) : ''
+            }
           </ButtonContainer>
         </CalendarBodyContainer>
 
@@ -201,10 +248,14 @@ class Calendar extends Component {
 
 Calendar.defaultProps = {
   showTimeSelector: false,
+  showCancelButton: false,
+  showConfirmButton: false,
 };
 
 Calendar.propTypes = {
   showTimeSelector: PropTypes.bool,
+  showCancelButton: PropTypes.bool,
+  showConfirmButton: PropTypes.bool,
 };
 
 export default Calendar;

@@ -2,7 +2,7 @@
   "name": "react-styled-calendar",
   "version": "0.0.7",
   "description": "A simple react calendar component",
-  "main": "./lib/react-styled-calendar.min.js",
+  "main": "./lib/react-styled-calendar.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "WEBPACK_ENV=build webpack",

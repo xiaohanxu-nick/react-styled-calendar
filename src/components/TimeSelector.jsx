@@ -63,6 +63,7 @@ const TimeSelector = (props) => {
     selectedDate,
     edittingTime,
     onHourClick,
+    showConfirmButton,
   } = props;
 
   const startHour = dateFns.startOfDay(selectedDate);
@@ -85,7 +86,7 @@ const TimeSelector = (props) => {
           <Cell
             className={`${dateFns.isSameHour(hour, selectedDate) ? 'selected' : ''}`}
             key={hour}
-            onClick={() => onHourClick(dateFns.parse(cloneHour))}
+            onClick={() => onHourClick(dateFns.parse(cloneHour), showConfirmButton)}
           >
             {formattedTime}
           </Cell>,
@@ -95,7 +96,7 @@ const TimeSelector = (props) => {
           <Cell
             className={`${dateFns.isSameHour(hour, selectedDate) ? 'selected' : ''}`}
             key={hour}
-            onClick={() => onHourClick(dateFns.parse(cloneHour))}
+            onClick={() => onHourClick(dateFns.parse(cloneHour), showConfirmButton)}
           >
             {formattedTime}
           </Cell>,
@@ -127,12 +128,14 @@ TimeSelector.defaultProps = {
   selectedDate: new Date(),
   edittingTime: false,
   onHourClick: () => {},
+  showConfirmButton: false,
 };
 
 TimeSelector.propTypes = {
   selectedDate: PropTypes.instanceOf(Date),
   edittingTime: PropTypes.bool,
   onHourClick: PropTypes.func,
+  showConfirmButton: PropTypes.bool,
 };
 
 export default TimeSelector;

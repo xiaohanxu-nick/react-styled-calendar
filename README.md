@@ -39,4 +39,6 @@ ReactDOM.render(<App />, rootElement);
 
 name | type | default | description 
 ---- | ---- | ------- | -----------
-showTimeSelector | boolean | false | control the display of TimeSelector Component
+showTimeSelector | boolean | false | control the display of the TimeSelector 
+showConfirmButton | boolean | true | control the display of the Confirm Button
+showCancelButton | boolean | true | control the display of the Cancel Button

@@ -82,6 +82,7 @@ const CalendarCells = (props) => {
     currentMonth,
     selectedDate,
     onDateClick,
+    showConfirmButton,
   } = props;
   const monthStart = dateFns.startOfMonth(currentMonth);
   const monthEnd = dateFns.endOfMonth(monthStart);
@@ -109,9 +110,12 @@ const CalendarCells = (props) => {
       }
       days.push(
         <Cell
-          className={`col cell ${className}`}
+          className={className}
           key={day}
-          onClick={() => onDateClick(dateFns.parse(cloneDay))}
+          onClick={className !== 'disabled'
+            ? () => onDateClick(dateFns.parse(cloneDay), showConfirmButton)
+            : ''
+          }
         >
           <Number>{formattedDate}</Number>
           <Bg>{formattedDate}</Bg>
@@ -137,11 +141,13 @@ CalendarCells.defaultProps = {
   selectedDate: new Date(),
   currentMonth: new Date(),
   onDateClick: () => {},
+  showConfirmButton: false,
 };
 
 CalendarCells.propTypes = {
   selectedDate: PropTypes.instanceOf(Date),
   currentMonth: PropTypes.instanceOf(Date),
   onDateClick: PropTypes.func,
+  showConfirmButton: PropTypes.bool,
 };
 export default CalendarCells;
