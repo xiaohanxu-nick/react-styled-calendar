@@ -34,7 +34,9 @@ function App() {
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ```
-
+## Feature
+- support en_US and zh_CN locale(UI)
+- support hour, date, select panel
 ## API
 
 name | type | default | description 
@@ -47,4 +49,4 @@ formatMonthYear | string | 'MMMM YYYY' | A string used to override the default f
 formatDateInput | string | 'YYYY-MM-DD HH:mm' | A string used to specify the format of the date in dateinput component
 confirmButtonMessage | string | 'Confirm' | A string specify the message shows up at the confirm button
 cancelButtonMessage | string | 'Cancel' | A string specify the message shows up at the cancel button
-timeSelectorHeader | string | 'Pick Up A Time ! | A string specify the content of the header of the time selector header
+timeSelectorMessage | string | 'Pick Up A Time ! | A string specify the content of the switch of the time selector

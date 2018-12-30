@@ -1,6 +1,6 @@
 {
   "name": "react-styled-calendar",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "A simple react calendar component",
   "main": "./lib/react-styled-calendar.js",
   "scripts": {
@@ -48,14 +48,18 @@
     "react-test-renderer": "^16.7.0",
     "uglifyjs-webpack-plugin": "^2.1.0",
     "webpack": "^4.28.2",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-merge": "^4.1.5"
   },
   "dependencies": {
+    "@material-ui/core": "^3.7.1",
     "date-fns": "^1.30.1",
+    "get-user-locale": "^1.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-icons": "^3.2.2",
     "styled-components": "^4.1.3"
   }
 }
