@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
+import formatWithLocale from '../helper/formatWithLocale';
 import defaultTheme from '../defaultTheme';
 import {
   Col,
@@ -26,19 +27,17 @@ const CalendarWeek = (props) => {
     currentMonth,
     formatWeek,
   } = props;
-  let weekday;
 
   const startDate = dateFns.startOfWeek(currentMonth);
 
   for (let i = 0; i < 7; i += 1) {
-    weekday = `${dateFns.format(dateFns.addDays(startDate, i), formatWeek)}`;
     days.push(
       <Col
         justifyContent="center"
         textAlign="center"
         key={i}
       >
-        {weekday}
+        {formatWithLocale(dateFns.addDays(startDate, i), formatWeek)}
       </Col>,
     );
   }
@@ -52,7 +51,7 @@ CalendarWeek.defaultProps = {
 
 CalendarWeek.propTypes = {
   currentMonth: PropTypes.instanceOf(Date),
-  formatWeek: PropTypes.isRequired,
+  formatWeek: PropTypes.string.isRequired,
 };
 
 

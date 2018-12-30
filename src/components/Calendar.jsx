@@ -105,7 +105,6 @@ class Calendar extends Component {
       showConfirmButton,
     } = this.props;
 
-
     this.setState(prevState => ({
       ...prevState,
       buttonCounter: showTimeSelector + showCancelButton + showConfirmButton,
@@ -153,7 +152,7 @@ class Calendar extends Component {
   onTimeEditting = (e) => {
     e.preventDefault();
 
-    this.setState(prevState => ({ ...prevState, edittingTime: true }));
+    this.setState(prevState => ({ ...prevState, edittingTime: !prevState.edittingTime }));
   }
 
   nextMonth = () => {
@@ -185,6 +184,10 @@ class Calendar extends Component {
       showConfirmButton,
       formatWeek,
       formatMonthYear,
+      formatDateInput,
+      confirmButtonMessage,
+      cancelButtonMessage,
+      timeSelectorHeader,
     } = this.props;
 
     return (
@@ -194,6 +197,7 @@ class Calendar extends Component {
           onButtonClick={this.onButtonClick}
           editting={editting}
           showTimeSelector={showTimeSelector}
+          formatDateInput={formatDateInput}
         />
         <CalendarBodyContainer className={editting ? 'open' : ''} editting={editting}>
           <CalendarHeader
@@ -227,19 +231,25 @@ class Calendar extends Component {
             {
               showCancelButton
                 ? (
-                  <Button onClick={this.onCancel}>Cancel</Button>
+                  <Button onClick={this.onCancel}>
+                    {cancelButtonMessage}
+                  </Button>
                 ) : ''
             }
             {
               showTimeSelector
                 ? (
-                  <Button onClick={this.onTimeEditting}>Select Time</Button>
+                  <Button onClick={this.onTimeEditting}>
+                    {timeSelectorHeader}
+                  </Button>
                 ) : ''
             }
             {
               showConfirmButton
                 ? (
-                  <Button onClick={this.onSave}>Confirm</Button>
+                  <Button onClick={this.onSave}>
+                    {confirmButtonMessage}
+                  </Button>
                 ) : ''
             }
           </ButtonContainer>
@@ -256,6 +266,10 @@ Calendar.defaultProps = {
   showConfirmButton: false,
   formatMonthYear: 'MMMM YYYY',
   formatWeek: 'ddd',
+  formatDateInput: 'YYYY-MM-DD HH:mm',
+  confirmButtonMessage: 'Confirm',
+  cancelButtonMessage: 'Cancel',
+  timeSelectorHeader: 'Pick Up A Time !',
 };
 
 Calendar.propTypes = {
@@ -264,6 +278,10 @@ Calendar.propTypes = {
   showConfirmButton: PropTypes.bool,
   formatWeek: PropTypes.string,
   formatMonthYear: PropTypes.string,
+  formatDateInput: PropTypes.string,
+  confirmButtonMessage: PropTypes.string,
+  cancelButtonMessage: PropTypes.string,
+  timeSelectorHeader: PropTypes.string,
 };
 
 export default Calendar;

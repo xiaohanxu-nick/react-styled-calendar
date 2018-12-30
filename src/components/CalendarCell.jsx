@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
+import formatWithLocale from '../helper/formatWithLocale';
 import defaultTheme from '../defaultTheme';
 import {
   Col,
@@ -99,7 +100,7 @@ const CalendarCells = (props) => {
 
   while (day <= endDate) {
     for (let i = 0; i < 7; i += 1) {
-      formattedDate = dateFns.format(day, dateFormat);
+      formattedDate = formatWithLocale(day, dateFormat);
       const cloneDay = day;
       if (!dateFns.isSameMonth(day, monthStart)) {
         className = 'disabled';

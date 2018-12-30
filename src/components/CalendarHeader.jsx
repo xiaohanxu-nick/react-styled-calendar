@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
+import formatWithLocale from '../helper/formatWithLocale';
 import defaultTheme from '../defaultTheme';
 import {
   Row,
@@ -73,7 +73,7 @@ const CalendarHeader = (props) => {
         justifyContent="center"
         textAlign="center"
       >
-        {dateFns.format(currentMonth, formatMonthYear)}
+        {formatWithLocale(currentMonth, formatMonthYear)}
       </Col>
       <Col
         justifyContent="flext-end"

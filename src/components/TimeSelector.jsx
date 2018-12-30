@@ -13,7 +13,7 @@ const TimeSelectorContainer = styled.div`
   transform: scale(0);
   opacity: 0;
   height: 0px;
-  transition: transform .2s ease, opacity .2s ease;
+  transition: transform .5s ease, opacity .5s ease;
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   &.open {
     transform: scale(1);
@@ -118,7 +118,6 @@ const TimeSelector = (props) => {
 
   return (
     <TimeSelectorContainer className={`${edittingTime ? 'open' : ''}`}>
-      <TimeSelectorHeader>Pick Up a Time !</TimeSelectorHeader>
       {rows}
     </TimeSelectorContainer>
   );

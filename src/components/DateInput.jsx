@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
+import formatWithLocale from '../helper/formatWithLocale';
 import defaultTheme from '../defaultTheme';
 
 const InputHightLighter = keyframes`
@@ -96,14 +96,13 @@ const DateInput = (props) => {
     onButtonClick,
     editting,
     showTimeSelector,
+    formatDateInput
   } = props;
-  const dateFormat = showTimeSelector ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
-
   return (
     <DateInputContainer>
       <InputContainer
         type="date-text"
-        value={dateFns.format(selectedDate, dateFormat)}
+        value={formatWithLocale(selectedDate, formatDateInput)}
         required
         readOnly
         onClick={onButtonClick}
@@ -126,5 +125,6 @@ DateInput.propTypes = {
   onButtonClick: PropTypes.func,
   showTimeSelector: PropTypes.bool,
   editting: PropTypes.bool,
+  formatDateInput: PropTypes.string.isRequired,
 };
 export default DateInput;
