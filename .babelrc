@@ -2,7 +2,14 @@
   "presets": [
     [
       "@babel/preset-env", {
-        "loose": true
+        "loose": false,
+        "targets": {
+          "chrome": "69",
+          "ie": "9",
+          "opera": "54",
+          "firefox": "64",
+          "safari": "10"
+        }
       }
     ],
     "@babel/preset-react"

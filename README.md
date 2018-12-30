@@ -30,6 +30,7 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ```
 ## Feature
+- support IE9+, Chrome, Firefox, Safari, and Opera
 - support en_US and zh_CN locale(UI)
 - support hour, date, select panel
 ## API
