@@ -95,8 +95,7 @@ const DateInput = (props) => {
     selectedDate,
     onButtonClick,
     editting,
-    showTimeSelector,
-    formatDateInput
+    formatDateInput,
   } = props;
   return (
     <DateInputContainer>
@@ -116,14 +115,12 @@ const DateInput = (props) => {
 DateInput.defaultProps = {
   selectedDate: new Date(),
   onButtonClick: () => {},
-  showTimeSelector: false,
   editting: false,
 };
 
 DateInput.propTypes = {
   selectedDate: PropTypes.instanceOf(Date),
   onButtonClick: PropTypes.func,
-  showTimeSelector: PropTypes.bool,
   editting: PropTypes.bool,
   formatDateInput: PropTypes.string.isRequired,
 };
