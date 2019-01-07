@@ -38,7 +38,7 @@ ReactDOM.render(<App />, rootElement);
 name | type | default | description 
 ---- | ---- | ------- | -----------
 showTimeSelector | boolean | false | control the display of the TimeSelector 
-showConfirmButton | boolean | true | control the display of the Confirm Button
+showConfirmButton | boolean | false | control the display of the Confirm Button
 showCancelButton | boolean | true | control the display of the Cancel Butto
 formatWeek | string | 'dddd' | A string used to override the default formattting of the weekday in the Calendar Header
 formatMonthYear | string | 'MMMM YYYY' | A string used to override the default formatting of the month and year in  Calendar Header
