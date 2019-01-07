@@ -6,7 +6,7 @@ import defaultTheme from '../defaultTheme';
 import {
   Row,
   Col,
-} from './CalendarContainer';
+} from './shared';
 
 const TimeSelectorContainer = styled.div`
   transform-origin: 50% 100%;
