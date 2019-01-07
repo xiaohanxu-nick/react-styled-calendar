@@ -3,6 +3,8 @@ A simple react Datepicker component built with [styled-components](https://www.s
 ## DEMO
 ![demo](./demo/demo.gif)
 
+[Play with it on Storybook](http://xiaohanxu.top/react-styled-calendar)
+
 ## Installation
 
 ```javascript
