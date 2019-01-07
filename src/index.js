@@ -1,3 +1,9 @@
-import CalendarApp from './components/Calendar';
+import DatePicker from './components/DatePicker';
+import WeekPicker from './components/WeekPicker';
+import MonthPicker from './components/MonthPicker';
 
-export default CalendarApp;
+export {
+  DatePicker,
+  WeekPicker,
+  MonthPicker,
+};
