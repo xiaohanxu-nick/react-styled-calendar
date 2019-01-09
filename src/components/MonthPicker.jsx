@@ -77,6 +77,7 @@ class MonthPicker extends Component {
       cancelButtonMessage,
       withLabel,
       labelMessage,
+      minDate,
     } = this.props;
 
 
@@ -105,6 +106,7 @@ class MonthPicker extends Component {
             onItemClick={this.onMonthClick}
             view="month"
             dateFormat="D"
+            minDate={minDate}
           />
           <Footer
             showTimeSelector={false}
@@ -132,6 +134,7 @@ MonthPicker.defaultProps = {
   cancelButtonMessage: 'Cancel',
   withLabel: false,
   labelMessage: 'Month',
+  minDate: undefined,
 };
 
 MonthPicker.propTypes = {
@@ -142,6 +145,7 @@ MonthPicker.propTypes = {
   cancelButtonMessage: PropTypes.string,
   withLabel: PropTypes.bool,
   labelMessage: PropTypes.string,
+  minDate: PropTypes.instanceOf(Date),
 };
 
 export default MonthPicker;

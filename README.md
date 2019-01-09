@@ -50,3 +50,4 @@ cancelButtonMessage | string | 'Cancel' | A string specify the message shows up 
 timeSelectorMessage | string | 'Pick Up A Time !' | A string specify the content of the switch of the time selector
 withLabel | boolean | false | Whether show up the label of the Date input
 labelMessage | string | 'Date' | The content of the date input label
+minDate | Date | undefined | The minimum date that can be selected from the calendar

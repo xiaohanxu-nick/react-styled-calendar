@@ -113,6 +113,7 @@ class DatePicker extends Component {
       timeSelectorMessage,
       labelMessage,
       withLabel,
+      minDate,
     } = this.props;
 
     return (
@@ -140,6 +141,7 @@ class DatePicker extends Component {
             formatWeek={formatWeek}
           />
           <DateCell
+            minDate={minDate}
             selectedDate={selectedDate}
             onItemClick={this.onDateClick}
             showConfirmButton={showConfirmButton}
@@ -186,6 +188,7 @@ DatePicker.defaultProps = {
   timeSelectorMessage: 'Pick Up A Time !',
   withLabel: false,
   labelMessage: 'Date',
+  minDate: undefined,
 };
 
 DatePicker.propTypes = {
@@ -200,6 +203,7 @@ DatePicker.propTypes = {
   timeSelectorMessage: PropTypes.string,
   withLabel: PropTypes.bool,
   labelMessage: PropTypes.string,
+  minDate: PropTypes.instanceOf(Date),
 };
 
 export default DatePicker;

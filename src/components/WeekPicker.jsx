@@ -75,6 +75,7 @@ class WeekPicker extends Component {
       cancelButtonMessage,
       withLabel,
       labelMessage,
+      minDate,
     } = this.props;
 
     return (
@@ -101,6 +102,7 @@ class WeekPicker extends Component {
             onItemClick={this.onWeekClick}
             dateFormat="D"
             view="week"
+            minDate={minDate}
           />
           <Footer
             showTimeSelector={false}
@@ -127,6 +129,7 @@ WeekPicker.defaultProps = {
   cancelButtonMessage: 'Cancel',
   withLabel: false,
   labelMessage: 'Week',
+  minDate: undefined,
 };
 
 WeekPicker.propTypes = {
@@ -136,6 +139,7 @@ WeekPicker.propTypes = {
   cancelButtonMessage: PropTypes.string,
   withLabel: PropTypes.bool,
   labelMessage: PropTypes.string,
+  minDate: PropTypes.instanceOf(Date),
 };
 
 export default WeekPicker;

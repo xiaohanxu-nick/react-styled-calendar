@@ -29,10 +29,8 @@ const Bg = styled.div`
   color: ${({ theme }) => theme.mainColor};
   width:100%;
   opacity: 0;
-  font-size: 4em;
+  font-size: 3em;
   position: absolute;
-  top: -.2em;
-  right: -.05em;
   transition: .25s ease-out;
   letter-spacing: -.07em;
 `;
@@ -141,11 +139,14 @@ Item.propTypes = {
   formattedDate: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
+const isBeforeMinDate = (date, minDate) => minDate && dateFns.isBefore(date, minDate);
+
 const DateCell = ({
   selectedDate,
   view,
   onItemClick,
   showConfirmButton,
+  minDate,
 }) => {
   let className;
   let cloneDate;
@@ -170,7 +171,8 @@ const DateCell = ({
         for (i = 0; i < itemPerRow; i += 1) {
           formattedDate = formatWithLocale(cloneDate, 'D');
 
-          if (!dateFns.isSameMonth(cloneDate, monthStart)) {
+          if (!dateFns.isSameMonth(cloneDate, monthStart)
+              || isBeforeMinDate(cloneDate, minDate)) {
             className = 'disabled';
           } else if (dateFns.isSameDay(cloneDate, selectedDate)) {
             className = 'selected';
@@ -224,8 +226,9 @@ const DateCell = ({
       while (cloneDate <= startOfLastWeek) {
         for (i = 0; i < itemPerCol && cloneDate <= startOfLastWeek; i += 1) {
           formattedDate = formatWithLocale(cloneDate, 'W');
-
-          if (dateFns.isSameWeek(cloneDate, selectedDate)) {
+          if (isBeforeMinDate(cloneDate, minDate)) {
+            className = 'disabled';
+          } else if (dateFns.isSameWeek(cloneDate, selectedDate)) {
             className = 'selected';
           } else {
             className = '';
@@ -272,7 +275,9 @@ const DateCell = ({
         for (let i = 0; i < itemPerCol && cloneDate < endOfYear; i += 1) {
           formattedDate = formatWithLocale(cloneDate, 'MM');
 
-          if (dateFns.isSameMonth(cloneDate, selectedDate)) {
+          if (isBeforeMinDate(cloneDate, minDate)) {
+            className = 'disabled';
+          } else if (dateFns.isSameMonth(cloneDate, selectedDate)) {
             className = 'selected';
           } else {
             className = '';
