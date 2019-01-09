@@ -48,3 +48,5 @@ formatDateInput | string | 'YYYY-MM-DD HH:mm' | A string used to specify the for
 confirmButtonMessage | string | 'Confirm' | A string specify the message shows up at the confirm button
 cancelButtonMessage | string | 'Cancel' | A string specify the message shows up at the cancel button
 timeSelectorMessage | string | 'Pick Up A Time !' | A string specify the content of the switch of the time selector
+withLabel | boolean | false | Whether show up the label of the Date input
+labelMessage | string | 'Date' | The content of the date input label
