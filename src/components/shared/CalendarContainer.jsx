@@ -51,6 +51,29 @@ const PickerBodyContainer = styled.div`
   will-change: transform, opacity;
   animation-delay: 2s;
 
+  &:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    height:0px;
+    border-bottom: 10px solid ${({ theme }) => theme.borderColor};
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 0px;
+    border-bottom: 10px solid ${({ theme }) => theme.neutralColor};
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+
   &.open {
     transform: scale(1);
     opacity: 1;
