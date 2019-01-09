@@ -42,6 +42,8 @@ storiesOf('DatePicker', module)
           formatWeek={select('Week Format', weekOptions)}
           formatMonthYear={select('Month and Year format in Header', monthYearOptions)}
           formatDateInput={select('Dateinput format', DateInputOptions)}
+          withLabel={boolean('Whether show up the input label', false)}
+          labelMessage={text('The content of the input label', 'Date')}
         />
       );
     }));

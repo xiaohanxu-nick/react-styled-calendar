@@ -17,5 +17,7 @@ storiesOf('MonthPicker', module)
         showCancelButton={boolean('Whether show the cancel button', false)}
         confirmButtonMessage={text('The content of the confirm button', 'Confirm')}
         cancelButtoMessage={text('Then content of the cancel button', 'Cancel')}
+        withLabel={boolean('Whether show up the input label', false)}
+        labelMessage={text('The content of the input label', 'Month')}
       />
     )));
