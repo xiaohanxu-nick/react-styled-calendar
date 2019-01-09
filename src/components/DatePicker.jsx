@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import DateCell from './DateCell';
 import TimeSelector from './TimeSelector';
 import {
   PickerContainer,
@@ -10,6 +9,7 @@ import {
   DateInput,
   Footer,
   HeaderWeek,
+  DateCell,
 } from './shared';
 
 class DatePicker extends Component {
@@ -122,6 +122,7 @@ class DatePicker extends Component {
           showTimeSelector={showTimeSelector}
           formatDateInput={formatDateInput}
           view="day"
+          withLabel
         />
         <PickerBodyContainer className={editting ? 'open' : ''} editting={editting}>
           <Header
@@ -136,10 +137,13 @@ class DatePicker extends Component {
             formatWeek={formatWeek}
           />
           <DateCell
-            currentMonth={currentMonth}
             selectedDate={selectedDate}
-            onDateClick={this.onDateClick}
+            onItemClick={this.onDateClick}
             showConfirmButton={showConfirmButton}
+            itemPerRow={7}
+            itemPerCOl={undefined}
+            view="day"
+            dateFormat="D"
           />
           {
             showTimeSelector

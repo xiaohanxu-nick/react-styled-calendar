@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import MonthCell from './MonthCell';
 import {
   PickerContainer,
   PickerBodyContainer,
   Header,
   DateInput,
   Footer,
+  DateCell,
 } from './shared';
 
 
@@ -95,10 +95,14 @@ class MonthPicker extends Component {
             view="month"
             formatMonthYear="YYYY MM DD"
           />
-          <MonthCell
+          <DateCell
             selectedDate={selectedDate}
             showConfirmButton={showConfirmButton}
-            onDateClick={this.onMonthClick}
+            onItemClick={this.onMonthClick}
+            view="month"
+            itemPerRow={undefined}
+            itemPerCol={4}
+            dateFormat="D"
           />
           <Footer
             showTimeSelector={false}
@@ -106,7 +110,7 @@ class MonthPicker extends Component {
             showConfirmButton={showConfirmButton}
             cancelButtonMessage={cancelButtonMessage}
             confirmButtonMessage={confirmButtonMessage}
-            timeSelectorHeader=""
+            timeSelectorMessage=""
             onTimeEditting={() => {}}
             onCancel={this.onCancel}
             onSave={this.onSave}

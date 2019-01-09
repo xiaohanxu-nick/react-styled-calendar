@@ -7,8 +7,8 @@ import {
   Header,
   Footer,
   DateInput,
+  DateCell,
 } from './shared';
-import WeekCell from './WeekCell';
 
 class WeekPicker extends Component {
   state = {
@@ -91,11 +91,14 @@ class WeekPicker extends Component {
             view="week"
             formatMonthYear="YYYY MM DD"
           />
-          <WeekCell
+          <DateCell
             selectedDate={selectedDate}
             showConfirmButton={showConfirmButton}
-            onDateClick={this.onWeekClick}
-
+            onItemClick={this.onWeekClick}
+            itemPerCol={18}
+            itemPerRow={undefined}
+            dateFormat="D"
+            view="week"
           />
           <Footer
             showTimeSelector={false}
@@ -103,7 +106,7 @@ class WeekPicker extends Component {
             showConfirmButton={showConfirmButton}
             cancelButtonMessage={cancelButtonMessage}
             confirmButtonMessage={confirmButtonMessage}
-            timeSelectorHeader=""
+            timeSelectorMessage=""
             onTimeEditting={() => {}}
             onCancel={this.onCancel}
             onSave={this.onSave}
