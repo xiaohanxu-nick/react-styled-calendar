@@ -73,6 +73,8 @@ class WeekPicker extends Component {
       showConfirmButton,
       confirmButtonMessage,
       cancelButtonMessage,
+      withLabel,
+      labelMessage,
     } = this.props;
 
     return (
@@ -82,6 +84,8 @@ class WeekPicker extends Component {
           onButtonClick={this.onButtonClick}
           editting={editting}
           view="week"
+          withLabel={withLabel}
+          labelMessage={labelMessage}
         />
         <PickerBodyContainer className={editting ? 'open' : ''} editting={editting}>
           <Header
@@ -95,8 +99,6 @@ class WeekPicker extends Component {
             selectedDate={selectedDate}
             showConfirmButton={showConfirmButton}
             onItemClick={this.onWeekClick}
-            itemPerCol={18}
-            itemPerRow={undefined}
             dateFormat="D"
             view="week"
           />
@@ -123,6 +125,8 @@ WeekPicker.defaultProps = {
   showConfirmButton: true,
   confirmButtonMessage: 'Confrim',
   cancelButtonMessage: 'Cancel',
+  withLabel: false,
+  labelMessage: 'Week',
 };
 
 WeekPicker.propTypes = {
@@ -130,6 +134,8 @@ WeekPicker.propTypes = {
   showConfirmButton: PropTypes.bool,
   confirmButtonMessage: PropTypes.string,
   cancelButtonMessage: PropTypes.string,
+  withLabel: PropTypes.bool,
+  labelMessage: PropTypes.string,
 };
 
 export default WeekPicker;

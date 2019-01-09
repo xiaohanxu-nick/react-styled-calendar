@@ -75,6 +75,8 @@ class MonthPicker extends Component {
       formatDateInput,
       confirmButtonMessage,
       cancelButtonMessage,
+      withLabel,
+      labelMessage,
     } = this.props;
 
 
@@ -86,6 +88,8 @@ class MonthPicker extends Component {
           formatDateInput={formatDateInput}
           onButtonClick={this.onButtonClick}
           view="month"
+          withLabel={withLabel}
+          labelMessage={labelMessage}
         />
         <PickerBodyContainer className={editting ? 'open' : ''} editting={editting}>
           <Header
@@ -100,8 +104,6 @@ class MonthPicker extends Component {
             showConfirmButton={showConfirmButton}
             onItemClick={this.onMonthClick}
             view="month"
-            itemPerRow={undefined}
-            itemPerCol={4}
             dateFormat="D"
           />
           <Footer
@@ -128,6 +130,8 @@ MonthPicker.defaultProps = {
   formatDateInput: 'YYYY-M',
   confirmButtonMessage: 'Confirm',
   cancelButtonMessage: 'Cancel',
+  withLabel: false,
+  labelMessage: 'Month',
 };
 
 MonthPicker.propTypes = {
@@ -136,6 +140,8 @@ MonthPicker.propTypes = {
   formatDateInput: PropTypes.string,
   confirmButtonMessage: PropTypes.string,
   cancelButtonMessage: PropTypes.string,
+  withLabel: PropTypes.bool,
+  labelMessage: PropTypes.string,
 };
 
 export default MonthPicker;
