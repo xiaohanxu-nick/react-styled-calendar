@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
 import formatWithLocale from '../../helper/formatWithLocale';
 import defaultTheme from '../../defaultTheme';
@@ -74,7 +73,7 @@ const Header = (props) => {
           justifyContent="center"
           textAlign="center"
         >
-          {`Year:${dateFns.getYear(selectedDate)} Week: ${dateFns.getISOWeek(selectedDate)}`}
+          {`${formatWithLocale(selectedDate, 'YYYY W')}`}
         </Col>
         <Col
           justifyContent="flex-end"
@@ -105,7 +104,7 @@ const Header = (props) => {
           justifyContent="center"
           textAlign="center"
         >
-          {`Year:${dateFns.getYear(selectedDate)} Month: ${dateFns.getMonth(selectedDate)}`}
+          {`${formatWithLocale(selectedDate, 'YYYY MMM')}`}
         </Col>
         <Col
           justifyContent="flex-end"
@@ -138,7 +137,7 @@ const Header = (props) => {
         {formatWithLocale(selectedDate, formatMonthYear)}
       </Col>
       <Col
-        justifyContent="flext-end"
+        justifyContent="flex-end"
         textAlign="right"
         onClick={next}
       >
