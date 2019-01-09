@@ -81,14 +81,14 @@ class DatePicker extends Component {
   nextMonth = () => {
     this.setState(prevState => ({
       ...prevState,
-      currentMonth: dateFns.addMonths(prevState.currentMonth, 1),
+      selectedDate: dateFns.addMonths(prevState.selectedDate, 1),
     }));
   }
 
   prevMonth = () => {
     this.setState(prevState => ({
       ...prevState,
-      currentMonth: dateFns.subMonths(prevState.currentMonth, 1),
+      selectedDate: dateFns.subMonths(prevState.selectedDate, 1),
     }));
   }
 
@@ -111,6 +111,8 @@ class DatePicker extends Component {
       confirmButtonMessage,
       cancelButtonMessage,
       timeSelectorMessage,
+      labelMessage,
+      withLabel,
     } = this.props;
 
     return (
@@ -122,7 +124,8 @@ class DatePicker extends Component {
           showTimeSelector={showTimeSelector}
           formatDateInput={formatDateInput}
           view="day"
-          withLabel
+          withLabel={withLabel}
+          labelMessage={labelMessage}
         />
         <PickerBodyContainer className={editting ? 'open' : ''} editting={editting}>
           <Header
@@ -140,10 +143,7 @@ class DatePicker extends Component {
             selectedDate={selectedDate}
             onItemClick={this.onDateClick}
             showConfirmButton={showConfirmButton}
-            itemPerRow={7}
-            itemPerCOl={undefined}
             view="day"
-            dateFormat="D"
           />
           {
             showTimeSelector
@@ -184,6 +184,8 @@ DatePicker.defaultProps = {
   confirmButtonMessage: 'Confirm',
   cancelButtonMessage: 'Cancel',
   timeSelectorMessage: 'Pick Up A Time !',
+  withLabel: false,
+  labelMessage: 'Date',
 };
 
 DatePicker.propTypes = {
@@ -196,6 +198,8 @@ DatePicker.propTypes = {
   confirmButtonMessage: PropTypes.string,
   cancelButtonMessage: PropTypes.string,
   timeSelectorMessage: PropTypes.string,
+  withLabel: PropTypes.bool,
+  labelMessage: PropTypes.string,
 };
 
 export default DatePicker;
