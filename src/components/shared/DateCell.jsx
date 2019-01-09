@@ -25,7 +25,9 @@ Number.defaultProps = {
 const Bg = styled.div`
   font-weight: 700;
   line-height: 1;
+  text-align: center;
   color: ${({ theme }) => theme.mainColor};
+  width:100%;
   opacity: 0;
   font-size: 4em;
   position: absolute;
@@ -86,7 +88,7 @@ const ItemContainer = styled(Col)`
   width: 100%;
   position: relative;
   height: 3em;
-  min-height: 30px;
+  min-height: 40px;
   border-right: 1px solid ${({ theme }) => theme.borderColor};
   overflow: hidden
   cursor: pointer;
@@ -142,15 +144,14 @@ Item.propTypes = {
 const DateCell = ({
   selectedDate,
   view,
-  itemPerRow,
-  itemPerCol,
   onItemClick,
   showConfirmButton,
-  dateFormat,
 }) => {
   let className;
   let cloneDate;
   let formattedDate;
+  let itemPerRow;
+  let itemPerCol;
 
   switch (view) {
     case 'day': {
@@ -158,15 +159,16 @@ const DateCell = ({
       const monthEnd = dateFns.endOfMonth(monthStart);
       const startDate = dateFns.startOfWeek(monthStart);
       const endDate = dateFns.endOfWeek(monthEnd);
-      let row = [];
       const rows = [];
+      let row = [];
+      let i;
 
       cloneDate = startDate;
-      let i;
+      itemPerRow = 7;
 
       while (cloneDate <= endDate) {
         for (i = 0; i < itemPerRow; i += 1) {
-          formattedDate = formatWithLocale(cloneDate, dateFormat);
+          formattedDate = formatWithLocale(cloneDate, 'D');
 
           if (!dateFns.isSameMonth(cloneDate, monthStart)) {
             className = 'disabled';
@@ -212,6 +214,7 @@ const DateCell = ({
       let col = [];
       let i;
 
+      itemPerCol = 11; // A year at most have 54 weeks and we have 3 col, 54/3 = 18
       if (dateFns.getISOWeek(startOfYear) > 1) {
         cloneDate = dateFns.addWeeks(startOfYear, 1);
       } else {
@@ -220,7 +223,7 @@ const DateCell = ({
 
       while (cloneDate <= startOfLastWeek) {
         for (i = 0; i < itemPerCol && cloneDate <= startOfLastWeek; i += 1) {
-          formattedDate = dateFns.getISOWeek(cloneDate);
+          formattedDate = formatWithLocale(cloneDate, 'W');
 
           if (dateFns.isSameWeek(cloneDate, selectedDate)) {
             className = 'selected';
@@ -263,6 +266,7 @@ const DateCell = ({
       let col = [];
 
       cloneDate = startOfYear;
+      itemPerCol = 4; // A year at most have 12 months and We have 3 col, 12/3=4
 
       while (cloneDate < endOfYear) {
         for (let i = 0; i < itemPerCol && cloneDate < endOfYear; i += 1) {
