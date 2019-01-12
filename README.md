@@ -1,4 +1,4 @@
-# React-Styled-
+# React-Styled-Calendar
 ![style](https://img.shields.io/badge/style-styled--components-blue.svg)
 ![codeStyle](https://img.shields.io/badge/code%20style-airbnb-ff69b4.svg) ![document](
   https://img.shields.io/badge/document-storybook-brightgreen.svg
