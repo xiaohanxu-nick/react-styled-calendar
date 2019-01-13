@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import formatWithLocale from '../../helper/formatWithLocale';
+import dateFns from 'date-fns';
+import { formatWithLocale } from '../../helper';
 import defaultTheme from '../../defaultTheme';
 import {
   Row,
@@ -55,7 +56,40 @@ const Header = (props) => {
     prev,
     formatMonthYear,
     view,
+    fromMonth,
+    toMonth,
   } = props;
+
+  if (view === 'range') {
+    return (
+      <HeaderContainer>
+        <Col
+          justifyContent="flex-start"
+          textAlign="left"
+          onClick={prev}
+        >
+          <IconContainer>
+            &lt;
+          </IconContainer>
+        </Col>
+        <Col
+          justifyContent="center"
+          textAlign="center"
+        >
+          {`${formatWithLocale(fromMonth, 'YYYY MMM')} - ${formatWithLocale(toMonth, 'YYYY MMM')}`}
+        </Col>
+        <Col
+          justifyContent="flex-end"
+          textAlign="right"
+          onClick={next}
+        >
+          <IconContainer>
+            &gt;
+          </IconContainer>
+        </Col>
+      </HeaderContainer>
+    );
+  }
 
   if (view === 'week') {
     return (
@@ -153,6 +187,8 @@ Header.defaultProps = {
   selectedDate: new Date(),
   prev: () => {},
   next: () => {},
+  fromMonth: new Date(),
+  toMonth: dateFns.addMonths(new Date(), 1),
 };
 
 Header.propTypes = {
@@ -161,6 +197,8 @@ Header.propTypes = {
   prev: PropTypes.func,
   next: PropTypes.func,
   formatMonthYear: PropTypes.string.isRequired,
+  fromMonth: PropTypes.instanceOf(Date),
+  toMonth: PropTypes.instanceOf(Date),
 };
 
 export default Header;
