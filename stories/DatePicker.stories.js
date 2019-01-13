@@ -6,13 +6,14 @@ import {
   boolean,
   text,
   select,
+  date,
 } from '@storybook/addon-knobs';
 import { DatePicker } from '../src';
 
 addDecorator(withKnobs);
 storiesOf('DatePicker', module)
   .add('default',
-    withInfo('xiao')(() => {
+    withInfo('This is the Datepicker\'s default UI, you can turn the knobs at the bottom to change it')(() => {
       const weekOptions = {
         d: 'd',
         do: 'do',
@@ -26,10 +27,16 @@ storiesOf('DatePicker', module)
         MMMYYYY: 'MMM YYYY',
         MMMMYYYY: 'MMMM YYYY',
       };
-      const DateInputOptions = {
+      const dateInputOptions = {
         'YYYY-MM-DD': 'YYYY-MM-DD',
         'DD/MM/YYYY': 'DD/MM/YYYY',
         'YYYY-MM-DD HH:mm': 'YYYY-MM-DD HH:mm',
+        'Wo/YYYY': 'Wo/YYYY',
+      };
+      const viewOptions = {
+        day: 'day',
+        week: 'week',
+        month: 'month',
       };
       return (
         <DatePicker
@@ -41,9 +48,12 @@ storiesOf('DatePicker', module)
           timeSelectorMessage={text('timeSelectorMessage', 'Pick Up A Time !')}
           formatWeek={select('Week Format', weekOptions)}
           formatMonthYear={select('Month and Year format in Header', monthYearOptions)}
-          formatDateInput={select('Dateinput format', DateInputOptions)}
+          formatDateInput={select('Dateinput format', dateInputOptions)}
           withLabel={boolean('Whether show up the input label', false)}
           labelMessage={text('The content of the input label', 'Date')}
+          minDate={date('The min-date can be selected(default to be Dec 24 2018', new Date('Dec 24 2018'))}
+          maxDate={date('The max-date can be selected(default to be Feb 2 2019', new Date('Feb 11 2019'))}
+          view={select('Select the view of the datepicker', viewOptions)}
         />
       );
     }));
