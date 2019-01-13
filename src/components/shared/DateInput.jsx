@@ -1,8 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import formatWithLocale from '../../helper/formatWithLocale';
+import { formatWithLocale } from '../../helper';
 import defaultTheme from '../../defaultTheme';
 
 const InputHightLighter = keyframes`
@@ -114,17 +113,11 @@ const DateInput = (props) => {
     onButtonClick,
     editting,
     formatDateInput,
-    view,
     withLabel,
     labelMessage,
   } = props;
-  let formattedDate;
 
-  if (view === 'week') {
-    formattedDate = `Year: ${dateFns.getYear(selectedDate)} Week:${dateFns.getISOWeek(selectedDate)}`;
-  } else {
-    formattedDate = formatWithLocale(selectedDate, formatDateInput);
-  }
+  const formattedDate = formatWithLocale(selectedDate, formatDateInput);
 
   return (
     <DateInputContainer>
@@ -158,7 +151,6 @@ DateInput.propTypes = {
   onButtonClick: PropTypes.func,
   editting: PropTypes.bool,
   formatDateInput: PropTypes.string,
-  view: PropTypes.string.isRequired,
   withLabel: PropTypes.bool,
   labelMessage: PropTypes.string,
 };
