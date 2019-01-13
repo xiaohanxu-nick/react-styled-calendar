@@ -8,6 +8,7 @@ const Row = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width:100%;
+  align-items: flex-start;
 `;
 
 Row.defaultProps = {
@@ -28,15 +29,6 @@ Col.defaultProps = {
   theme: defaultTheme,
 };
 
-
-const PickerContainer = styled.div`
-  width: 30%;
-  background: transparent;
-  margin: 40px auto;
-`;
-PickerContainer.defaultProps = {
-  theme: defaultTheme,
-};
 const PickerBodyContainer = styled.div`
   display: ${props => (props.editting ? 'block' : 'none')};
   position: relative;
@@ -50,6 +42,11 @@ const PickerBodyContainer = styled.div`
   transition: transform .5s ease, opacity .5s ease;
   will-change: transform, opacity;
   animation-delay: 2s;
+
+  &.open {
+    transform: scale(1);
+    opacity: 1;
+  }
 
   &:before {
     content: "";
@@ -73,17 +70,20 @@ const PickerBodyContainer = styled.div`
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
   }
-
-  &.open {
-    transform: scale(1);
-    opacity: 1;
-  }
-  
 `;
-
 PickerBodyContainer.defaultProps = {
   theme: defaultTheme,
 };
+
+const PickerContainer = styled.div`
+  background: transparent;
+  margin: 40px auto;
+  width: 30%;
+`;
+PickerContainer.defaultProps = {
+  theme: defaultTheme,
+};
+
 
 export {
   Col,
