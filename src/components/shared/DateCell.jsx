@@ -2,7 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import formatWithLocale from '../../helper/formatWithLocale';
+import classNames from 'classnames';
+import {
+  formatWithLocale,
+  whetherDisabled,
+  whetherSelected,
+  whetherSameDay,
+} from '../../helper';
 import defaultTheme from '../../defaultTheme';
 import {
   Col,
@@ -39,6 +45,7 @@ Bg.defaultProps = {
   theme: defaultTheme,
 };
 
+
 const DateRow = styled(Row)`
   .selected {
     border-left: 5px solid transparent;
@@ -49,7 +56,7 @@ const DateRow = styled(Row)`
     opacity: 0.5;
     color: black;
     transition: .5s ease-in;
-  }
+  } 
   .disabled{
     color:lightgray;
   }
@@ -62,17 +69,6 @@ DateRow.defaultProps = {
 const DateCol = styled(Col)`
   display: flex;
   flex-direction: column;
-
-  .selected {
-    border-left: 5px solid transparent;
-    border-image: linear-gradient(45deg, #1a8fff 0%,#53cbf1 40%);
-    border-image-slice: 1;
-  }
-  .selected ${Bg}{
-    opacity: 0.5;
-    color: black;
-    transition: .5s ease-in;
-  }
   .disabled{
     color:lightgray;
   }
@@ -85,18 +81,15 @@ DateCol.defaultProps = {
 const ItemContainer = styled(Col)`
   width: 100%;
   position: relative;
-  height: 3em;
-  min-height: 40px;
-  border-right: 1px solid ${({ theme }) => theme.borderColor};
+  flex-direction: column;
+  align-items: center;
+  height: 2em;
   overflow: hidden
   cursor: pointer;
   background: ${({ theme }) => theme.neutralColor};
   transition: 0.25s ease-out;
+
   
-  &:hover{
-    background: ${({ theme }) => theme.bgColor};
-    transition: 0.5s ease-out;
-  }
 `;
 
 ItemContainer.defaultProps = {
@@ -106,10 +99,12 @@ ItemContainer.defaultProps = {
 const Item = (props) => {
   const {
     value,
-    className,
     onDateClick,
     showConfirmButton,
     formattedDate,
+    disabledCell,
+    selectedCell,
+    showBg,
   } = props;
 
   const onDateClickHandler = () => {
@@ -118,28 +113,37 @@ const Item = (props) => {
 
   return (
     <ItemContainer
-      className={className}
+      className={classNames({
+        disabled: disabledCell,
+        selected: selectedCell,
+      })}
       key={value}
-      onClick={className !== 'disabled'
+      onClick={!disabledCell
         ? onDateClickHandler
         : () => {}
       }
     >
-      <Number>{formattedDate}</Number>
-      <Bg>{formattedDate}</Bg>
+      <Number>
+        {formattedDate}
+      </Number>
+      {
+        showBg
+          ? (<Bg>{formattedDate}</Bg>)
+          : ''
+      }
     </ItemContainer>
   );
 };
 
 Item.propTypes = {
   value: PropTypes.instanceOf(Date).isRequired,
-  className: PropTypes.string.isRequired,
   onDateClick: PropTypes.func.isRequired,
   showConfirmButton: PropTypes.bool.isRequired,
   formattedDate: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  disabledCell: PropTypes.bool.isRequired,
+  selectedCell: PropTypes.bool.isRequired,
+  showBg: PropTypes.bool.isRequired,
 };
-
-const isBeforeMinDate = (date, minDate) => minDate && dateFns.isBefore(date, minDate);
 
 const DateCell = ({
   selectedDate,
@@ -147,6 +151,10 @@ const DateCell = ({
   onItemClick,
   showConfirmButton,
   minDate,
+  maxDate,
+  renderMonth,
+  from,
+  to,
 }) => {
   let className;
   let cloneDate;
@@ -155,6 +163,52 @@ const DateCell = ({
   let itemPerCol;
 
   switch (view) {
+    case 'range': {
+      const monthStart = dateFns.startOfMonth(renderMonth);
+      const monthEnd = dateFns.endOfMonth(monthStart);
+      const startDate = dateFns.startOfWeek(monthStart);
+      const endDate = dateFns.endOfWeek(monthEnd);
+      const rows = [];
+      let row = [];
+      let i;
+
+
+      cloneDate = startDate;
+      itemPerRow = 7;
+
+      while (cloneDate <= endDate) {
+        for (i = 0; i < itemPerRow; i += 1) {
+          formattedDate = formatWithLocale(cloneDate, 'D');
+          const disabled = whetherDisabled(cloneDate, monthStart, minDate, maxDate);
+          const selected = !disabled && whetherSelected(cloneDate, selectedDate, from, to);
+
+          row.push(
+            <Item
+              key={cloneDate}
+              value={cloneDate}
+              formattedDate={formattedDate}
+              onDateClick={onItemClick}
+              showConfirmButton={showConfirmButton}
+              disabledCell={disabled}
+              selectedCell={selected}
+              showBg={false}
+            />,
+          );
+          cloneDate = dateFns.addDays(cloneDate, 1);
+        }
+        rows.push(
+          <DateRow key={cloneDate}>
+            {row}
+          </DateRow>,
+        );
+        row = [];
+      }
+      return (
+        <DateCol key={cloneDate}>
+          {rows}
+        </DateCol>
+      );
+    }
     case 'day': {
       const monthStart = dateFns.startOfMonth(selectedDate);
       const monthEnd = dateFns.endOfMonth(monthStart);
@@ -170,24 +224,19 @@ const DateCell = ({
       while (cloneDate <= endDate) {
         for (i = 0; i < itemPerRow; i += 1) {
           formattedDate = formatWithLocale(cloneDate, 'D');
-
-          if (!dateFns.isSameMonth(cloneDate, monthStart)
-              || isBeforeMinDate(cloneDate, minDate)) {
-            className = 'disabled';
-          } else if (dateFns.isSameDay(cloneDate, selectedDate)) {
-            className = 'selected';
-          } else {
-            className = '';
-          }
+          const disabled = whetherDisabled(cloneDate, undefined, minDate, maxDate);
+          const selected = whetherSameDay(cloneDate, selectedDate);
 
           row.push(
             <Item
-              className={className}
               key={cloneDate}
               value={cloneDate}
               formattedDate={formattedDate}
               onDateClick={onItemClick}
               showConfirmButton={showConfirmButton}
+              disabledCell={disabled}
+              selectedCell={selected}
+              showBg
             />,
           );
 
@@ -202,9 +251,9 @@ const DateCell = ({
       }
 
       return (
-        <Row>
+        <DateCol>
           {rows}
-        </Row>
+        </DateCol>
       );
     }
     case 'week': {
@@ -226,13 +275,8 @@ const DateCell = ({
       while (cloneDate <= startOfLastWeek) {
         for (i = 0; i < itemPerCol && cloneDate <= startOfLastWeek; i += 1) {
           formattedDate = formatWithLocale(cloneDate, 'W');
-          if (isBeforeMinDate(cloneDate, minDate)) {
-            className = 'disabled';
-          } else if (dateFns.isSameWeek(cloneDate, selectedDate)) {
-            className = 'selected';
-          } else {
-            className = '';
-          }
+          const disabled = whetherDisabled(cloneDate, undefined, minDate, maxDate);
+          const selected = whetherSameDay(cloneDate, selectedDate);
 
           col.push(
             <Item
@@ -242,6 +286,9 @@ const DateCell = ({
               formattedDate={formattedDate}
               showConfirmButton={showConfirmButton}
               onDateClick={onItemClick}
+              disabledCell={disabled}
+              selectedCell={selected}
+              showBg
             />,
           );
 
@@ -274,14 +321,8 @@ const DateCell = ({
       while (cloneDate < endOfYear) {
         for (let i = 0; i < itemPerCol && cloneDate < endOfYear; i += 1) {
           formattedDate = formatWithLocale(cloneDate, 'MM');
-
-          if (isBeforeMinDate(cloneDate, minDate)) {
-            className = 'disabled';
-          } else if (dateFns.isSameMonth(cloneDate, selectedDate)) {
-            className = 'selected';
-          } else {
-            className = '';
-          }
+          const disabled = whetherDisabled(cloneDate, undefined, minDate, maxDate);
+          const selected = whetherSameDay(cloneDate, selectedDate);
 
           col.push(
             <Item
@@ -291,6 +332,10 @@ const DateCell = ({
               formattedDate={formattedDate}
               showConfirmButton={showConfirmButton}
               onDateClick={onItemClick}
+              disabledCell={disabled}
+              selectedCell={selected}
+              showBg
+
             />,
           );
           cloneDate = dateFns.addMonths(cloneDate, 1);
@@ -313,5 +358,15 @@ const DateCell = ({
       return undefined;
     }
   }
+};
+
+
+DateCell.propTypes = {
+  selectedDate: PropTypes.instanceOf(Date),
+  view: PropTypes.string,
+  onItemClick: PropTypes.func,
+  showConfirmButton: PropTypes.bool,
+  minDate: PropTypes.instanceOf(Date),
+  maxDate: PropTypes.instanceOf(Date),
 };
 export default DateCell;
