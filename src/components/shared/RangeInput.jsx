@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import DateInput from './DateInput';
 
 const RangeContainer = styled.div`
 `;
-class RangeInput extends Component {
-  state = {
-    fromDate: null,
-    toDate: null,
-  }
+const RangeInput = ({ toDate, fromDate, onButtonClick }) => (
+  <RangeContainer>
+    <DateInput selectedDate={fromDate} view="day" withLabel labelMessage="From" onButtonClick={onButtonClick} />
+    <DateInput selectedDate={toDate} view="day" withLabel labelMessage="To" onButtonClick={onButtonClick} />
+  </RangeContainer>
+);
 
-  render() {
-    const {
-      fromDate,
-      toDate,
-    } = this.state;
-    return (
-      <RangeContainer>
-        <DateInput selectedDate={fromDate} view="day" withLabel labelMessage="From" />
-        <DateInput selectedDate={toDate} view="day" withLabel labelMessage="To" />
-      </RangeContainer>
-    );
-  }
-}
+RangeInput.propTypes = {
+  toDate: PropTypes.instanceOf(Date).isRequired,
+  fromDate: PropTypes.instanceOf(Date).isRequired,
+  onButtonClick: PropTypes.func.isRequired,
+};
 
 export default RangeInput;
