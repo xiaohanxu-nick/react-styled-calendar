@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import formatWithLocale from '../../helper/formatWithLocale';
+import { formatWithLocale } from '../../helper';
 import defaultTheme from '../../defaultTheme';
 import { Col, Row } from './CalendarContainer';
 
