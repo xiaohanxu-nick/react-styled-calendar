@@ -3,6 +3,8 @@ import HeaderWeek from './HeaderWeek';
 import Footer from './Footer';
 import DateInput from './DateInput';
 import DateCell from './DateCell';
+import RangeCell from './RangeCell';
+import RangeInput from './RangeInput';
 import {
   Col,
   Row,
@@ -19,6 +21,8 @@ export {
   DateCell,
   Col,
   Row,
+  RangeCell,
+  RangeInput,
   PickerContainer,
   PickerBodyContainer,
 };
