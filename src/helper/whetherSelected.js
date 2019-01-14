@@ -1,5 +1,5 @@
 import isSameDay from 'date-fns/is_same_day';
-import isBetween from './isBetween';
+import isBetween from './whetherBetween';
 
 export default function whetherSelected(day, selectedDate, from, to) {
   if (isSameDay(day, from)
