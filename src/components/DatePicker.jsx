@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
 import TimeSelector from './TimeSelector';
 import {
@@ -8,9 +7,12 @@ import {
   Header,
   DateInput,
   Footer,
-  HeaderWeek,
   DateCell,
 } from './shared';
+import {
+  addMonth,
+  subMonth,
+} from '../helper';
 
 class DatePicker extends Component {
   state = {
@@ -43,7 +45,7 @@ class DatePicker extends Component {
       this.onSave();
       onDateSelected(day);
     } else {
-      this.onDateClick(day);
+      onDateSelected(day);
     }
   }
 
@@ -92,14 +94,14 @@ class DatePicker extends Component {
   nextMonth = () => {
     this.setState(prevState => ({
       ...prevState,
-      selectedDate: dateFns.addMonths(prevState.selectedDate, 1),
+      selectedDate: addMonth(prevState.selectedDate, 1),
     }));
   }
 
   prevMonth = () => {
     this.setState(prevState => ({
       ...prevState,
-      selectedDate: dateFns.subMonths(prevState.selectedDate, 1),
+      selectedDate: subMonth(prevState.selectedDate, 1),
     }));
   }
 
@@ -115,7 +117,6 @@ class DatePicker extends Component {
       showTimeSelector,
       showCancelButton,
       showConfirmButton,
-      formatWeek,
       formatMonthYear,
       formatDateInput,
       confirmButtonMessage,
@@ -143,15 +144,6 @@ class DatePicker extends Component {
           view={view}
           formatMonthYear={formatMonthYear}
         />
-        {
-            view === 'day'
-              ? (
-                <HeaderWeek
-                  currentMonth={selectedDate}
-                  formatWeek={formatWeek}
-                />
-              ) : ''
-          }
         <DateCell
           minDate={minDate}
           maxDate={maxDate}
@@ -213,7 +205,6 @@ DatePicker.defaultProps = {
   showCancelButton: false,
   showConfirmButton: false,
   formatMonthYear: 'MMMM YYYY',
-  formatWeek: 'ddd',
   formatDateInput: 'YYYY-MM-DD HH:mm',
   confirmButtonMessage: 'Confirm',
   cancelButtonMessage: 'Cancel',
@@ -234,7 +225,6 @@ DatePicker.propTypes = {
   showTimeSelector: PropTypes.bool,
   showCancelButton: PropTypes.bool,
   showConfirmButton: PropTypes.bool,
-  formatWeek: PropTypes.string,
   formatMonthYear: PropTypes.string,
   formatDateInput: PropTypes.string,
   confirmButtonMessage: PropTypes.string,
