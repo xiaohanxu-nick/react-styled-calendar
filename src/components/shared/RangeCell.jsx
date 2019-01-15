@@ -1,7 +1,9 @@
 import React from 'react';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
 import DateCell from './DateCell';
+import {
+  addMonth,
+} from '../../helper';
 import {
   Row,
 } from './CalendarContainer';
@@ -51,7 +53,7 @@ RangeCell.defaultProps = {
   fromDate: new Date(),
   toDate: new Date(),
   fromMonth: new Date(),
-  toMonth: dateFns.addMonths(new Date(), 1),
+  toMonth: addMonth(new Date(), 1),
 };
 
 RangeCell.propTypes = {
