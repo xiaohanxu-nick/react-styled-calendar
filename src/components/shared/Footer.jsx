@@ -8,9 +8,11 @@ const Button = styled.div`
   text-align: center;
   outline: none;
   border: none;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 14px 16px;
+  height: 0.8em;
+  line-height: 0.8em;
+  font-size: 0.6em;
+  font-weight: 400;
+  padding: 10px 6px;
   color: ${({ theme }) => theme.textColor};
   cursor: pointer;
   border-radius: 2px;
