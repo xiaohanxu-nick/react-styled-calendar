@@ -8,6 +8,7 @@ import RangeInput from './RangeInput';
 import {
   Col,
   Row,
+  RangePickerContainer,
   PickerBodyContainer,
   PickerContainer,
 } from './CalendarContainer';
@@ -25,4 +26,5 @@ export {
   RangeInput,
   PickerContainer,
   PickerBodyContainer,
+  RangePickerContainer,
 };
