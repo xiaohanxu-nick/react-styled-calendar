@@ -1,5 +1,4 @@
 import React from 'react';
-import dateFns from 'date-fns';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import defaultTheme from '../defaultTheme';
@@ -7,6 +6,13 @@ import {
   Row,
   Col,
 } from './shared';
+import {
+  getStartOfDay,
+  getEndOfDay,
+  formatWithLocale,
+  whetherSameHour,
+  addHour,
+} from '../helper';
 
 const TimeSelectorContainer = styled.div`
   transform-origin: 50% 100%;
@@ -49,9 +55,9 @@ HoursRow.defaultProps = {
 const Cell = styled(Col)`
   cursor: pointer;
   text-align: center;
-  line-height: 2em;
-  height: 2em;
-  color:${({ theme }) => theme.textColorLight};
+  line-height: 1em;
+  font-size: 0.80em;
+  height: 1em;
 `;
 
 Cell.defaultProps = {
@@ -66,8 +72,8 @@ const TimeSelector = (props) => {
     showConfirmButton,
   } = props;
 
-  const startHour = dateFns.startOfDay(selectedDate);
-  const endHour = dateFns.endOfDay(selectedDate);
+  const startHour = getStartOfDay(selectedDate);
+  const endHour = getEndOfDay(selectedDate);
   const dateFormat = 'HH';
   const rows = [];
   const am = [];
@@ -78,15 +84,15 @@ const TimeSelector = (props) => {
 
   while (hour <= endHour) {
     for (let i = 0; i < 24; i += 1) {
-      formattedTime = dateFns.format(hour, dateFormat);
+      formattedTime = formatWithLocale(hour, dateFormat);
       const cloneHour = hour;
 
       if (i < 12) {
         am.push(
           <Cell
-            className={`${dateFns.isSameHour(hour, selectedDate) ? 'selected' : ''}`}
+            className={`${whetherSameHour(hour, selectedDate) ? 'selected' : ''}`}
             key={hour}
-            onClick={() => onHourClick(dateFns.parse(cloneHour), showConfirmButton)}
+            onClick={() => onHourClick(cloneHour, showConfirmButton)}
           >
             {formattedTime}
           </Cell>,
@@ -94,15 +100,15 @@ const TimeSelector = (props) => {
       } else {
         pm.push(
           <Cell
-            className={`${dateFns.isSameHour(hour, selectedDate) ? 'selected' : ''}`}
+            className={`${whetherSameHour(hour, selectedDate) ? 'selected' : ''}`}
             key={hour}
-            onClick={() => onHourClick(dateFns.parse(cloneHour), showConfirmButton)}
+            onClick={() => onHourClick(cloneHour, showConfirmButton)}
           >
             {formattedTime}
           </Cell>,
         );
       }
-      hour = dateFns.addHours(hour, 1);
+      hour = addHour(hour, 1);
     }
   }
   rows.push(
