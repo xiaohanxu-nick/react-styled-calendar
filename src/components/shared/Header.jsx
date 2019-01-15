@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import dateFns from 'date-fns';
-import { formatWithLocale } from '../../helper';
+import {
+  formatWithLocale,
+  addMonth,
+} from '../../helper';
 import defaultTheme from '../../defaultTheme';
 import {
   Row,
@@ -11,9 +13,9 @@ import {
 
 const HeaderContainer = styled(Row)`
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: 110%;
-  padding: 1.5em 0;
+  font-weight: 400;
+  font-size: 1em;
+  padding: 1em 0;
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
@@ -37,11 +39,11 @@ const IconContainer = styled.div`
   }
 
   &:first-of-type {
-    margin-left: 1em;
+    margin-left: 0.2em;
   }
 
   &:last-of-type {
-    margin-right: 1em;
+    margin-right: 0.2em;
   }
 `;
 
@@ -188,7 +190,7 @@ Header.defaultProps = {
   prev: () => {},
   next: () => {},
   fromMonth: new Date(),
-  toMonth: dateFns.addMonths(new Date(), 1),
+  toMonth: addMonth(new Date(), 1),
 };
 
 Header.propTypes = {
