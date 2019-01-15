@@ -4,10 +4,11 @@ import defaultTheme from '../../defaultTheme';
 const Row = styled.div`
   margin: 0;
   padding: 0;
+  flex-grow: 1;
+  flex-basis: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width:100%;
   align-items: flex-start;
 `;
 
@@ -17,9 +18,9 @@ Row.defaultProps = {
 
 const Col = styled.div`
   flex-grow: 1;
-  flex-basis: 0;
-  max-width: 100%;
+  flex-basis: auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: ${props => (props.justifyContent ? props.justifyContent : 'center')};
   text-align: ${props => props.textAlign};
@@ -31,11 +32,10 @@ Col.defaultProps = {
 
 const PickerBodyContainer = styled.div`
   display: ${props => (props.editting ? 'block' : 'none')};
-  position: relative;
   background: ${({ theme }) => theme.neutralColor};
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 5px;
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  box-shadow: 1px 10px 20px rgba(0,0,0,0.22), 0 13px 12px rgba(0,0,0,0.22);
   transform-origin: 50% 0%;
   transform: scale(0);
   opacity: 0;
@@ -78,16 +78,25 @@ PickerBodyContainer.defaultProps = {
 const PickerContainer = styled.div`
   background: transparent;
   margin: 40px auto;
-  width: 30%;
+  width: 14em;
 `;
 PickerContainer.defaultProps = {
   theme: defaultTheme,
 };
 
+const RangePickerContainer = styled.div`
+  background: transparent;
+  margin: 40px auto;
+  width: 28.4em;
+`;
+RangePickerContainer.defaultProps = {
+  theme: defaultTheme,
+};
 
 export {
   Col,
   Row,
   PickerContainer,
   PickerBodyContainer,
+  RangePickerContainer,
 };
