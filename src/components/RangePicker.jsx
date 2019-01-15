@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import dateFns from 'date-fns';
 import {
-  Col,
-  HeaderWeek,
   Header,
   Footer,
   RangeInput,
-  PickerContainer,
+  RangePickerContainer,
   PickerBodyContainer,
   RangeCell,
 } from './shared';
-
+import {
+  addMonth,
+  subMonth,
+} from '../helper';
 
 class RangePicker extends Component {
   state = {
     fromDate: new Date(),
     toDate: new Date(),
     fromMonth: new Date(),
-    toMonth: dateFns.addMonths(new Date(), 1),
+    toMonth: addMonth(new Date(), 1),
     editting: false,
     buttonCounter: 0,
     whetherFirstInput: true,
@@ -27,8 +27,8 @@ class RangePicker extends Component {
   prevMonth = () => {
     this.setState(prevState => ({
       ...prevState,
-      fromMonth: dateFns.subMonths(prevState.fromMonth, 1),
-      toMonth: dateFns.subMonths(prevState.toMonth, 1),
+      fromMonth: subMonth(prevState.fromMonth, 1),
+      toMonth: subMonth(prevState.toMonth, 1),
     }));
   }
 
@@ -36,8 +36,8 @@ class RangePicker extends Component {
     console.log('setState');
     this.setState(prevState => ({
       ...prevState,
-      fromMonth: dateFns.addMonths(prevState.fromMonth, 1),
-      toMonth: dateFns.addMonths(prevState.toMonth, 1),
+      fromMonth: addMonth(prevState.fromMonth, 1),
+      toMonth: addMonth(prevState.toMonth, 1),
     }));
   }
 
@@ -52,6 +52,8 @@ class RangePicker extends Component {
   onCancel = () => {}
 
   onSave = () => {}
+
+  calculateNewRange = () => {}
 
   onItemClick = (date) => {
     const { chooseWhereFrom } = this.state;
@@ -83,6 +85,7 @@ class RangePicker extends Component {
     } = this.state;
     const {
       minDate,
+      maxDate,
       className,
       showConfirmButton,
       showCancelButton,
@@ -93,7 +96,7 @@ class RangePicker extends Component {
     } = this.props;
 
     return (
-      <PickerContainer>
+      <RangePickerContainer>
         <RangeInput
           toDate={toDate}
           fromDate={fromDate}
@@ -112,12 +115,9 @@ class RangePicker extends Component {
             toMonth={toMonth}
             formatMonthYear="MMMM YYYY"
           />
-          <Col>
-            <HeaderWeek formatWeek="ddd" />
-            <HeaderWeek formatWeek="ddd" />
-          </Col>
           <RangeCell
             minDate={minDate}
+            maxDate={maxDate}
             fromMonth={fromMonth}
             toMonth={toMonth}
             onItemClick={this.onItemClick}
@@ -140,13 +140,14 @@ class RangePicker extends Component {
 
           />
         </PickerBodyContainer>
-      </PickerContainer>
+      </RangePickerContainer>
     );
   }
 }
 
 RangePicker.defaultProps = {
-  minDate: new Date('Dec 24 2018'),
+  minDate: undefined,
+  maxDate: undefined,
   className: '',
   confirmButtonMessage: 'Confirm',
   cancelButtonMessage: 'Cancel',
@@ -158,6 +159,7 @@ RangePicker.defaultProps = {
 
 RangePicker.propTypes = {
   minDate: PropTypes.instanceOf(Date),
+  maxDate: PropTypes.instanceOf(Date),
   className: PropTypes.string,
   confirmButtonMessage: PropTypes.string,
   cancelButtonMessage: PropTypes.string,
