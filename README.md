@@ -42,13 +42,15 @@ ReactDOM.render(<App />, rootElement);
 - support IE9+, Chrome, Firefox, Safari, and Opera
 - support en_US and zh_CN locale(UI)
 - support several select panels(hour, date, week, month)
+- support Range Selector 
 ## API
 
+API for DatePicker
 name | type | default | description 
 ---- | ---- | ------- | -----------
 showTimeSelector | Boolean | false | control the display of the TimeSelector 
 showConfirmButton | Boolean | false | control the display of the Confirm Button
-showCancelButton | Boolean | true | control the display of the Cancel Butto
+showCancelButton | Boolean | true | control the display of the Cancel Button
 formatWeek | String | 'dddd' | A string used to override the default formattting of the weekday in the Calendar Header
 formatMonthYear | String | 'MMMM YYYY' | A string used to override the default formatting of the month and year in  Calendar Header
 formatDateInput | String | 'YYYY-MM-DD HH:mm' | A string used to specify the format of the date in dateinput component
@@ -61,3 +63,20 @@ minDate | Date | undefined | The minimum date that can be selected from the cale
 maxDate | Date | undefined | The maximum date that can be selected from the calendar
 onDateSelected | Function | (dateSelected) => { console.log(dateSelected.toLocaleDateString()) }; | The handler function which is called once a date is selected
 view | String | 'day' | It specifies the view of the datepicker, it can be one of ['day', 'week', 'month']
+
+API for RangePicker
+name | type | default | description
+---- | ---- | ------- | -----------
+minDate | Date | undefined | The minimum date that can be selected from the calendar
+maxDate | Date | undefined | The maximum date that can be selected from the calendar
+className | String | '' | The customized className which is used on the wrapper of the RangePicker
+showConfirmButton | Boolean | false | control the display of the Confirm Button
+showCancelButton | Boolean | true | control the display of the Cancel Button
+showTimeSelector | Boolean | false | control the display of the TimeSelector 
+confirmButtonMessage | String | 'Confirm' | A string specify the message shows up at the confirm button
+cancelButtonMessage | String | 'Cancel' | A string specify the message shows up at the cancel button
+timeSelectorMessage | String | 'Pick Up A Time !' | A string specify the content of the switch of the time selector
+
+## Todos
+- [] Implement the customized theme.
+- [] testing
