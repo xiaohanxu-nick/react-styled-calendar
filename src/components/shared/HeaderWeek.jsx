@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import dateFns from 'date-fns';
 import PropTypes from 'prop-types';
-import { formatWithLocale } from '../../helper';
+import {
+  formatWithLocale,
+  getStartOfWeek,
+  addDay,
+} from '../../helper';
 import defaultTheme from '../../defaultTheme';
-import { Col, Row } from './CalendarContainer';
 
-const DaysContainer = styled(Row)`
+const DaysContainer = styled.thead`
   font-weight: 500;
   font-size: 70%;
   color: ${({ theme }) => theme.textColorLight};
@@ -18,6 +20,15 @@ DaysContainer.defaultProps = {
   theme: defaultTheme,
 };
 
+const WeekCol = styled.th`
+  height: 2em;
+  width: 2em;
+`;
+
+WeekCol.defaultProps = {
+  theme: defaultTheme,
+};
+
 const HeaderWeek = (props) => {
   const days = [];
   const {
@@ -25,21 +36,22 @@ const HeaderWeek = (props) => {
     formatWeek,
   } = props;
 
-  const startDate = dateFns.startOfWeek(currentMonth);
+  const startDate = getStartOfWeek(currentMonth);
 
   for (let i = 0; i < 7; i += 1) {
     days.push(
-      <Col
+      <WeekCol
         justifyContent="center"
         textAlign="center"
         key={i}
+        colSpan="1"
       >
-        {formatWithLocale(dateFns.addDays(startDate, i), formatWeek)}
-      </Col>,
+        {formatWithLocale(addDay(startDate, i), formatWeek)}
+      </WeekCol>,
     );
   }
 
-  return <DaysContainer>{days}</DaysContainer>;
+  return <DaysContainer><tr>{days}</tr></DaysContainer>;
 };
 
 HeaderWeek.defaultProps = {
