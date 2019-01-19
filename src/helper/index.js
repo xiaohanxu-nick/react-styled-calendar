@@ -4,6 +4,7 @@ import whetherDisabled from './whetherDisabled';
 import whetherSelected from './whetherSelected';
 import whetherSameDay from './whetherSameDay';
 import whetherSameHour from './whetherSameHour';
+import whetherBefore from './whetherBefore';
 import whetherSat from './whetherSat';
 import whetherSun from './whetherSun';
 import getStartOfDay from './getStartOfDay';
@@ -28,6 +29,7 @@ export {
   whetherSelected,
   whetherSameDay,
   whetherSameHour,
+  whetherBefore,
   whetherSat,
   whetherSun,
   getStartOfDay,
