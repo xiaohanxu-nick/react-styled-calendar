@@ -45,7 +45,7 @@ storiesOf('DatePicker', module)
           showCancelButton={boolean('showCancelButton', false)}
           confirmButtonMessage={text('confirmButtonMessage', 'Confirm')}
           cancelButtonMessage={text('cancelButtonMessage', 'Cancel')}
-          timeSelectorMessage={text('timeSelectorMessage', 'Pick Up A Time !')}
+          timeSelectorMessage={text('timeSelectorMessage', 'Time')}
           formatWeek={select('Week Format', weekOptions)}
           formatMonthYear={select('Month and Year format in Header', monthYearOptions)}
           formatDateInput={select('Dateinput format', dateInputOptions)}
@@ -54,6 +54,7 @@ storiesOf('DatePicker', module)
           minDate={date('The min-date can be selected(default to be Dec 24 2018', new Date('Dec 24 2018'))}
           maxDate={date('The max-date can be selected(default to be Feb 2 2019', new Date('Feb 11 2019'))}
           view={select('Select the view of the datepicker', viewOptions)}
+          defaultDate={date('Specifies the initial selected date of the DatePicker component', new Date())}
         />
       );
     }));
