@@ -218,6 +218,7 @@ const DateCell = ({
           <HeaderWeek
             currentMonth={selectedDate}
             formatWeek="ddd"
+            view="day"
           />
           <DateTb>
             {rows}
@@ -234,7 +235,7 @@ const DateCell = ({
       let col = [];
       let i;
 
-      itemPerCol = 11; // A year at most have 54 weeks and we have 3 col, 54/5 = 11
+      itemPerCol = 7;
       if (getWeekNumber(startOfYear) > 1) {
         cloneDate = addWeek(startOfYear, 1);
       } else {
@@ -270,9 +271,16 @@ const DateCell = ({
       }
 
       return (
-        <DateTb>
-          {cols}
-        </DateTb>
+        <DateTable>
+          <HeaderWeek
+            currentMonth={selectedDate}
+            formatWeek="ddd"
+            view="week"
+          />
+          <DateTb>
+            {cols}
+          </DateTb>
+        </DateTable>
       );
     }
     case 'month': {
@@ -283,7 +291,7 @@ const DateCell = ({
       let col = [];
 
       cloneDate = startOfYear;
-      itemPerCol = 4; // A year at most have 12 months and We have 3 col, 12/3=4
+      itemPerCol = 7;
 
       while (cloneDate < endOfYear) {
         for (let i = 0; i < itemPerCol && cloneDate < endOfYear; i += 1) {
@@ -314,9 +322,16 @@ const DateCell = ({
         col = [];
       }
       return (
-        <DateTb>
-          {cols}
-        </DateTb>
+        <DateTable>
+          <HeaderWeek
+            currentMonth={selectedDate}
+            formatWeek="ddd"
+            view="month"
+          />
+          <DateTb>
+            {cols}
+          </DateTb>
+        </DateTable>
       );
     }
     default: {
