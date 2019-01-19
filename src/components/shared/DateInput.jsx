@@ -18,6 +18,7 @@ const DateInputContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
   background: transparent;
+  text-align: center;
 `;
 
 DateInputContainer.defaultProps = {
