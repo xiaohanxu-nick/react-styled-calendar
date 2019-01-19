@@ -1,5 +1,6 @@
 # React-Styled-Calendar
 ![style](https://img.shields.io/badge/style-styled--components-blue.svg)
+![size](https://img.shields.io/badge/gzipped%20-11.89kb-ff69b4.svg)
 ![codeStyle](https://img.shields.io/badge/code%20style-airbnb-ff69b4.svg) ![document](
   https://img.shields.io/badge/document-storybook-brightgreen.svg
 )
@@ -8,9 +9,13 @@ A simple React Datepicker component built with [styled-components](https://www.s
 
 
 ## DEMO
-![demo](./demo/demo.gif)
+##### DatePicker
+![datepickerDemo](./demo/datepicker.gif)
 
-[Play with it on Storybook](http://xiaohanxu.top/react-styled-calendar)
+#### RangePicker
+![rangepickerDemo](./demo/rangepicker.gif)
+
+[Play with them on Storybook](http://xiaohanxu.top/react-styled-calendar)
 
 ## Installation
 
@@ -24,13 +29,13 @@ npm install react-styled-calendar --save
 ```javascript
 import react from 'react';
 import ReactDOM from 'react-dom';
-import Calendar from 'react-styled-calendar';
+import { DatePicker } from 'react-styled-calendar';
 
 
 function App() {
   return (
     <div>
-      <Calendar />
+      <DatePicker />
     </div>
   );
 }
@@ -82,5 +87,5 @@ defaultFromDate | Date | new Date() | Specify the initial selected date of the f
 defaultToDate | Date | new Date() | Specify the initial selected date of the second (to) input
 
 ## Todos
-- [] Implement the customized theme.
-- [] testing
+- [ ] Implement the customized theme.
+- [ ] test

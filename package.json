@@ -1,8 +1,8 @@
 {
   "name": "react-styled-calendar",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A simple react calendar component",
-  "main": "./lib/react-styled-calendar.js",
+  "main": "./lib/react-styled-calendar.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
