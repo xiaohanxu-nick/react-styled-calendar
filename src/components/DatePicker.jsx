@@ -15,12 +15,17 @@ import {
 } from '../helper';
 
 class DatePicker extends Component {
-  state = {
-    selectedDate: new Date(),
-    editting: false,
-    edittingTime: false,
-    buttonCounter: 0,
+  constructor(props) {
+    super(props);
+    const { defaultDate } = this.props;
+    this.state = {
+      selectedDate: defaultDate,
+      editting: false,
+      edittingTime: false,
+      buttonCounter: 0,
+    };
   }
+
 
   componentDidMount() {
     const {
@@ -127,56 +132,8 @@ class DatePicker extends Component {
       minDate,
       maxDate,
       view,
-      rangeSelect,
       className,
     } = this.props;
-
-
-    const PickerBody = (
-      <PickerBodyContainer
-        className={`${className} ${editting ? 'open' : ''}`}
-        editting={editting}
-      >
-        <Header
-          selectedDate={selectedDate}
-          prev={this.prevMonth}
-          next={this.nextMonth}
-          view={view}
-          formatMonthYear={formatMonthYear}
-        />
-        <DateCell
-          minDate={minDate}
-          maxDate={maxDate}
-          selectedDate={selectedDate}
-          onItemClick={this.onDateClick}
-          showConfirmButton={showConfirmButton}
-          view={view}
-        />
-        {
-            showTimeSelector
-              ? (
-                <TimeSelector
-                  selectedDate={selectedDate}
-                  onHourClick={this.onHourClick}
-                  showConfirmButton={showConfirmButton}
-                  edittingTime={edittingTime}
-                />
-              ) : ''
-          }
-        <Footer
-          showTimeSelector={showTimeSelector}
-          showCancelButton={showCancelButton}
-          showConfirmButton={showConfirmButton}
-          cancelButtonMessage={cancelButtonMessage}
-          timeSelectorMessage={timeSelectorMessage}
-          confirmButtonMessage={confirmButtonMessage}
-          onTimeEditting={this.onTimeEditting}
-          onCancel={this.onCancel}
-          onSave={this.onSave}
-          buttonCounter={buttonCounter}
-        />
-      </PickerBodyContainer>
-    );
 
     return (
       <PickerContainer>
@@ -189,12 +146,49 @@ class DatePicker extends Component {
           withLabel={withLabel}
           labelMessage={labelMessage}
         />
-        {PickerBody}
-        {
-          rangeSelect
-            ? PickerBody
-            : ''
-        }
+        <PickerBodyContainer
+          className={`${className} ${editting ? 'open' : ''}`}
+          editting={editting}
+        >
+          <Header
+            selectedDate={selectedDate}
+            prev={this.prevMonth}
+            next={this.nextMonth}
+            view={view}
+            formatMonthYear={formatMonthYear}
+          />
+          <DateCell
+            minDate={minDate}
+            maxDate={maxDate}
+            selectedDate={selectedDate}
+            onItemClick={this.onDateClick}
+            showConfirmButton={showConfirmButton}
+            view={view}
+          />
+          {
+            showTimeSelector
+              ? (
+                <TimeSelector
+                  selectedDate={selectedDate}
+                  onHourClick={this.onHourClick}
+                  showConfirmButton={showConfirmButton}
+                  edittingTime={edittingTime}
+                />
+              ) : ''
+          }
+          <Footer
+            showTimeSelector={showTimeSelector}
+            showCancelButton={showCancelButton}
+            showConfirmButton={showConfirmButton}
+            cancelButtonMessage={cancelButtonMessage}
+            timeSelectorMessage={timeSelectorMessage}
+            confirmButtonMessage={confirmButtonMessage}
+            onTimeEditting={this.onTimeEditting}
+            onCancel={this.onCancel}
+            onSave={this.onSave}
+            buttonCounter={buttonCounter}
+          />
+        </PickerBodyContainer>
       </PickerContainer>
     );
   }
@@ -213,12 +207,10 @@ DatePicker.defaultProps = {
   labelMessage: 'Date',
   minDate: undefined,
   maxDate: undefined,
-  onDateSelected: (selectedDate) => {
-    console.log(selectedDate.toLocaleDateString());
-  },
+  onDateSelected: () => {},
   view: 'day',
-  rangeSelect: false,
   className: '',
+  defaultDate: new Date(),
 };
 
 DatePicker.propTypes = {
@@ -242,8 +234,8 @@ DatePicker.propTypes = {
   ]),
   onDateSelected: PropTypes.func,
   view: PropTypes.string,
-  rangeSelect: PropTypes.bool,
   className: PropTypes.string,
+  defaultDate: PropTypes.instanceOf(Date),
 };
 
 export default DatePicker;
