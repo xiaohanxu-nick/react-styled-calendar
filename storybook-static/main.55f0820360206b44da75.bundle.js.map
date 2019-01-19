@@ -1,0 +1,1 @@
+{"version":3,"file":"main.55f0820360206b44da75.bundle.js","sources":["webpack:///./src/defaultTheme.js"],"sourcesContent":["export default {\n  mainColor: '#1a8fff',\n  textColor: '#777',\n  textColorLight: '#ccc',\n  borderColor: '#eee',\n  bgColor: '#f9f9f9',\n  neutralColor: '#fff',\n  buttonBg: 'rgba(158,158,158,.2)',\n};\n"],"mappings":"AAAA","sourceRoot":""}
