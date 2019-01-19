@@ -11,17 +11,47 @@ import {
 import {
   addMonth,
   subMonth,
+  whetherBefore,
+  whetherSameDay,
 } from '../helper';
 
 class RangePicker extends Component {
-  state = {
-    fromDate: new Date(),
-    toDate: new Date(),
-    fromMonth: new Date(),
-    toMonth: addMonth(new Date(), 1),
-    editting: false,
-    buttonCounter: 0,
-    whetherFirstInput: true,
+  constructor(props) {
+    super(props);
+    const {
+      defaultFromInput,
+      defaultToInput,
+    } = this.props;
+    this.state = {
+      fromDate: defaultFromInput,
+      toDate: defaultToInput,
+      fromMonth: new Date(),
+      toMonth: addMonth(new Date(), 1),
+      editting: false,
+      buttonCounter: 0,
+      whetherFirstInput: true,
+    };
+  }
+
+
+  componentDidUpdate() {
+    const { fromDate, toDate } = this.state;
+
+    this.calculateNewRage(fromDate, toDate);
+  }
+
+  calculateNewRage = (fromDate, toDate) => {
+    const { onRangeSelected } = this.props;
+    if (!whetherSameDay(fromDate, toDate) && !whetherBefore(fromDate, toDate)) {
+      this.setState(prevState => ({
+        ...prevState,
+        fromDate: toDate,
+        toDate: fromDate,
+      }));
+      onRangeSelected(toDate, fromDate);
+    } else {
+      onRangeSelected(fromDate, toDate);
+    }
   }
 
   prevMonth = () => {
@@ -33,12 +63,15 @@ class RangePicker extends Component {
   }
 
   nextMonth = () => {
-    console.log('setState');
     this.setState(prevState => ({
       ...prevState,
       fromMonth: addMonth(prevState.fromMonth, 1),
       toMonth: addMonth(prevState.toMonth, 1),
     }));
+  }
+
+  onSave = () => {
+    this.setState(prevState => ({ ...prevState, editting: false }));
   }
 
   onButtonClick = (e) => {
@@ -47,32 +80,25 @@ class RangePicker extends Component {
     this.setState(prevState => ({ ...prevState, editting: true }));
   }
 
-  onTimeEditting = () => {}
-
-  onCancel = () => {}
-
-  onSave = () => {}
-
-  calculateNewRange = () => {}
-
   onItemClick = (date) => {
-    const { chooseWhereFrom } = this.state;
-    if (chooseWhereFrom) {
+    const { whetherFirstInput } = this.state;
+    if (whetherFirstInput) {
       this.setState(prevState => ({
         ...prevState,
-        chooseWhereFrom: false,
+        whetherFirstInput: false,
         fromDate: date,
         toDate: prevState.toDate,
       }));
     } else {
       this.setState(prevState => ({
         ...prevState,
-        chooseWhereFrom: true,
+        whetherFirstInput: true,
         fromDate: prevState.fromDate,
         toDate: date,
       }));
     }
   }
+
 
   render() {
     const {
@@ -82,17 +108,15 @@ class RangePicker extends Component {
       toMonth,
       editting,
       buttonCounter,
+      whetherFirstInput,
     } = this.state;
     const {
       minDate,
       maxDate,
       className,
-      showConfirmButton,
-      showCancelButton,
-      showTimeSelector,
-      confirmButtonMessage,
-      cancelButtonMessage,
-      timeSelectorMessage,
+      withLabel,
+      fromInputLabel,
+      toInputLabel,
     } = this.props;
 
     return (
@@ -101,6 +125,10 @@ class RangePicker extends Component {
           toDate={toDate}
           fromDate={fromDate}
           onButtonClick={this.onButtonClick}
+          whetherFirstInput={whetherFirstInput}
+          withLabel={withLabel}
+          fromInputLabel={fromInputLabel}
+          toInputLabel={toInputLabel}
         />
         <PickerBodyContainer
           className={`${className} ${editting ? 'open' : ''}`}
@@ -121,23 +149,19 @@ class RangePicker extends Component {
             fromMonth={fromMonth}
             toMonth={toMonth}
             onItemClick={this.onItemClick}
-            showConfirmButton={showConfirmButton}
+            showConfirmButton={false}
             view="range"
             fromDate={fromDate}
             toDate={toDate}
+            whetherFirstInput={whetherFirstInput}
           />
           <Footer
-            showTimeSelector={showTimeSelector}
-            showCancelButton={showCancelButton}
-            showConfirmButton={showConfirmButton}
             onTimeEditting={this.onTimeEditting}
             onCancel={this.onCancel}
             onSave={this.onSave}
             buttonCounter={buttonCounter}
-            cancelButtonMessage={cancelButtonMessage}
-            confirmButtonMessage={confirmButtonMessage}
-            timeSelectorMessage={timeSelectorMessage}
-
+            showConfirmButton
+            confirmButtonMessage="Confirm"
           />
         </PickerBodyContainer>
       </RangePickerContainer>
@@ -149,24 +173,24 @@ RangePicker.defaultProps = {
   minDate: undefined,
   maxDate: undefined,
   className: '',
-  confirmButtonMessage: 'Confirm',
-  cancelButtonMessage: 'Cancel',
-  timeSelectorMessage: 'Choose a Time',
-  showConfirmButton: false,
-  showCancelButton: false,
-  showTimeSelector: false,
+  withLabel: true,
+  fromInputLabel: 'From',
+  toInputLabel: 'To',
+  defaultFromInput: new Date(),
+  defaultToInput: new Date(),
+  onRangeSelected: () => { },
 };
 
 RangePicker.propTypes = {
   minDate: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   className: PropTypes.string,
-  confirmButtonMessage: PropTypes.string,
-  cancelButtonMessage: PropTypes.string,
-  timeSelectorMessage: PropTypes.string,
-  showTimeSelector: PropTypes.bool,
-  showCancelButton: PropTypes.bool,
-  showConfirmButton: PropTypes.bool,
+  withLabel: PropTypes.bool,
+  fromInputLabel: PropTypes.string,
+  toInputLabel: PropTypes.string,
+  defaultFromInput: PropTypes.instanceOf(Date),
+  defaultToInput: PropTypes.instanceOf(Date),
+  onRangeSelected: PropTypes.func,
 };
 
 export default RangePicker;
