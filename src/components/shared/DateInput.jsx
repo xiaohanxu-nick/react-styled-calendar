@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { formatWithLocale } from '../../helper';
 import defaultTheme from '../../defaultTheme';
@@ -100,6 +101,14 @@ const InputContainer = styled.input`
       opacity: 1;
     }
   }
+  &.edittingNow {
+    ~ ${Label} {
+      opacity: 1;
+    }
+    ~ ${Bar}:before, ~${Bar}:after{
+      width: 50%;
+    }
+  }
 `;
 
 InputContainer.defaultProps = {
@@ -115,6 +124,7 @@ const DateInput = (props) => {
     formatDateInput,
     withLabel,
     labelMessage,
+    setRef,
   } = props;
 
   const formattedDate = formatWithLocale(selectedDate, formatDateInput);
@@ -122,8 +132,14 @@ const DateInput = (props) => {
   return (
     <DateInputContainer>
       <InputContainer
+        className={
+          classNames({
+            edittingNow: editting,
+          })
+        }
         type="date-text"
         value={formattedDate}
+        ref={setRef}
         required
         readOnly
         onClick={onButtonClick}
@@ -144,6 +160,7 @@ DateInput.defaultProps = {
   formatDateInput: 'YYYY-MM-DD',
   withLabel: false,
   labelMessage: 'Date',
+  setRef: () => {},
 };
 
 DateInput.propTypes = {
@@ -153,5 +170,6 @@ DateInput.propTypes = {
   formatDateInput: PropTypes.string,
   withLabel: PropTypes.bool,
   labelMessage: PropTypes.string,
+  setRef: PropTypes.func,
 };
 export default DateInput;
