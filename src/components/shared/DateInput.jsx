@@ -61,7 +61,7 @@ const Bar = styled.span`
     content: '';
     height: 2px;
     width: ${props => (props.editting ? '50%' : '0')};
-    botto: 1px
+    bottom: 1px;
     position: absolute;
     background: ${({ theme }) => theme.mainColor};
     transition: 0.5s ease all;
